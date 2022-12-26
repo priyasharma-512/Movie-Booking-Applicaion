@@ -14,7 +14,7 @@ public class TicketDto {
 
     int id;
 
-    String alloted_seats;
+    Set<String> alloted_seats;
 
     double amount;
 

@@ -20,7 +20,7 @@ public class MovieServiceImplementation implements MovieService {
 
     @Override
     public MovieResponseDto addMovie(MovieEntryDto movieEntryDto)  {
-
+    // here we are MovieResponseDto instead of void coz if we have a successfull api call postman will return the movieResponseDto
 
         //Id --> not there
         //name  --> Yes
@@ -39,19 +39,13 @@ public class MovieServiceImplementation implements MovieService {
         log.info("In the function add movie "+ movieEntryDto);
 
 
-        //I need a movieEntity Object
-        /*
-                How can I get it
-         */
-
-        //We were createing a MovieEntity Object
+        //We were creating a MovieEntity Object
 
 
         MovieEntity movieEntity = MovieConverter.convertDtoToEntity(movieEntryDto);
 
 
         movieEntity = movieRepository.save(movieEntity); //This will auto add the id variable
-        //
 
         movieResponseDto = MovieConverter.convertEntityToDto(movieEntity);
 

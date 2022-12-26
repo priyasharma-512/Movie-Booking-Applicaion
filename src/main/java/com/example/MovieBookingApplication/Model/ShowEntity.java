@@ -48,8 +48,6 @@ public class ShowEntity {
     @JsonIgnore
     private MovieEntity movie;
 
-
-    //Must required ?
     @ManyToOne
     @JsonIgnore
     private TheaterEntity theater;

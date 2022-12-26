@@ -15,7 +15,7 @@ public class TicketController {
     @Autowired
     TicketServiceImplementation ticketService;
 
-    @GetMapping("get/{id}")
+    @GetMapping("/get/{id}")
     public TicketResponseDto getTicketById(@PathVariable Integer id){
 
         return ticketService.getTicket(id);

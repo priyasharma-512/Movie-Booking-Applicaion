@@ -37,13 +37,12 @@ public class ShowServiceImplementation implements ShowService {
 
         ShowEntity showEntity = ShowConverter.convertDtoToEntity(showEntryDto);
 
-        //MovieEntity
+        //set MovieEntity -> get movieEntity corresponding to id fetching movie corresponding to id
         MovieEntity movieEntity = movieRepository.findById(showEntryDto.getMovieResponseDto().getId()).get();
+        showEntity.setMovie(movieEntity);
 
+        //set theatreEntity
         TheaterEntity theaterEntity = theaterRepository.findById(showEntryDto.getTheaterResponseDto().getId()).get();
-
-
-        showEntity.setMovie(movieEntity); //Why are we setting these varibble
         showEntity.setTheater(theaterEntity);
 
         showEntity = showRepository.save(showEntity);
@@ -52,23 +51,27 @@ public class ShowServiceImplementation implements ShowService {
         //We need to pass the list of the theater seats
         List<ShowSeatsEntity> showSeatsEntityList = generateShowEntitySeats(theaterEntity.getSeats(),showEntity);
         showSeatsRepository.saveAll(showSeatsEntityList);
-        //We need to create Response Show Dto.
 
+        //We need to create Response Show Dto.
         ShowResponseDto showResponseDto = ShowConverter.convertEntityToDto(showEntity,showEntryDto);
 
         return showResponseDto;
     }
 
+   /* @Override
+    public static ShowResponseDto getShow(int id) {
+        ShowEntity showEntity = ShowRepository.findById(id).get();
+
+        ShowConverter showConverter;
+        ShowResponseDto showResponseDto = ShowConverter.convertEntityToDto(showEntity, ShowEntryDto);
+
+        return showResponseDto;
+    }*/
+
+    //creating copy of seats
     public List<ShowSeatsEntity> generateShowEntitySeats(List<TheaterSeatsEntity> theaterSeatsEntityList,ShowEntity showEntity){
 
         List<ShowSeatsEntity> showSeatsEntityList = new ArrayList<>();
-
-        //log.info(String.valueOf(theaterSeatsEntityList));
-//        log.info("The list of theaterEntity Seats");
-//        for(TheaterSeatsEntity tse: theaterSeatsEntityList){
-//            log.info(tse.toString());
-//        }
-
 
         for(TheaterSeatsEntity tse : theaterSeatsEntityList){
 
@@ -79,7 +82,6 @@ public class ShowServiceImplementation implements ShowService {
 
             showSeatsEntityList.add(showSeatsEntity);
         }
-
 
         //We need to set the show Entity for each of the ShowSeat....
         for(ShowSeatsEntity showSeatsEntity:showSeatsEntityList){

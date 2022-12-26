@@ -16,16 +16,16 @@ public class UserController {
     @Autowired
     UserServiceImplementation userService;
 
-    @PostMapping("add")
-    public ResponseEntity addUser(@RequestBody UserEntryDto userEntryDto){
+    @PostMapping("/add")
+    public ResponseEntity<String> addUser(@RequestBody UserEntryDto userEntryDto){
 
         userService.addUser(userEntryDto);
 
-        return new ResponseEntity("Added a success User", HttpStatus.CREATED);
+        return new ResponseEntity("Added a User successfully", HttpStatus.CREATED);
 
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<UserResponseDto> getUser(@PathVariable(value = "id")int id){
 
         UserResponseDto userResponseDto = userService.getUser(id);

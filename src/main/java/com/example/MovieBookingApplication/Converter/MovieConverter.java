@@ -32,4 +32,4 @@ public class MovieConverter {
                 .name(movieEntity.getName()).build();
 
     }
-}}
+}

@@ -5,7 +5,6 @@ import com.example.MovieBookingApplication.Repository.UserRepository;
 import com.example.MovieBookingApplication.Service.UserService;
 import com.example.MovieBookingApplication.Converter.UserConverter;
 import com.example.MovieBookingApplication.Dto.EntryDto.UserEntryDto;
-import com.example.MovieBookingApplication.Dto.EntryDto.UserEntryDto;
 import com.example.MovieBookingApplication.Dto.ResponseDto.UserResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

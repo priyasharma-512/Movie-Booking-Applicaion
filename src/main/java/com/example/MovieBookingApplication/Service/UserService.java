@@ -5,9 +5,9 @@ import com.example.MovieBookingApplication.Dto.ResponseDto.UserResponseDto;
 
 public interface UserService { //Designing part
 
-    void addUser(UserEntryDto userEntryDto);
+     void addUser(UserEntryDto userEntryDto);
 
-    UserResponseDto getUser(int id);
+     UserResponseDto getUser(int id);
 
 
 }

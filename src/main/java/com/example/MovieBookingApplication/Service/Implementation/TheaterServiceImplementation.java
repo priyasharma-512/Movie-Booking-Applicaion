@@ -43,7 +43,7 @@ public class TheaterServiceImplementation implements TheaterService {
         theaterEntity.setShows(null);
 
         for(TheaterSeatsEntity theaterSeatsEntity:seats){
-            theaterSeatsEntity.setTheater(theaterEntity);
+            theaterSeatsEntity.setTheater(theaterEntity); //tells this particular seat belongs to which theatre
         }
 
         theaterEntity.setType(TheaterType.SINGLE);
@@ -77,8 +77,9 @@ public class TheaterServiceImplementation implements TheaterService {
         seats.add(getTheaterSeat("2D",100,SeatType.PREMIUM));
         seats.add(getTheaterSeat("2E",100,SeatType.PREMIUM));
 
+        theaterSeatsRepository.saveAll(seats);
         return seats;
-        //Add in this TheaterSeatEntity type
+
 
     }
 

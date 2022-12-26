@@ -6,7 +6,7 @@ import com.example.MovieBookingApplication.Dto.ResponseDto.TicketResponseDto;
 public interface TicketService {
 
 
-    TicketResponseDto getTicket(int id); //H.W (Hint is same as you do in GetMovie)
+    TicketResponseDto getTicket(int id);
 
     TicketResponseDto bookTicket(BookTicketRequestDto bookTicketRequestDto);
 

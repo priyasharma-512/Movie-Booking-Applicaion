@@ -14,14 +14,14 @@ import java.time.LocalTime;
 public class ShowEntryDto {
 
     @NotNull
-    LocalDate showDate;
+    private LocalDate showDate;
 
     @NotNull
-    LocalTime showTime;
+    private LocalTime showTime;
 
     @NotNull
-    MovieResponseDto movieResponseDto;
+    private MovieResponseDto movieResponseDto;
 
     @NotNull
-    TheaterResponseDto theaterResponseDto;
+    private TheaterResponseDto theaterResponseDto;
 }

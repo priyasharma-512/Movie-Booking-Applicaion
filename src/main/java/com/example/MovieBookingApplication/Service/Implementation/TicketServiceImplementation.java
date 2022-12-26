@@ -59,10 +59,11 @@ public class TicketServiceImplementation implements TicketService {
 
         log.info("Ticket half processed");
 
+        //get the requested seats
         Set<String> requestSeats = bookTicketRequestDto.getRequestedSeats();
 
-
-        List<ShowSeatsEntity> showSeatsEntityList = showEntity.getSeats();
+        //to see what are the seats available in that show
+        List<ShowSeatsEntity> availableSeats = showEntity.getSeats();
 
         // for(ShowSeatsEntity seat: showSeatsEntityList) System.out.print(seat+" ");
 
@@ -78,7 +79,7 @@ public class TicketServiceImplementation implements TicketService {
 
         List<ShowSeatsEntity> bookedSeats = new ArrayList<>();
 
-        for(ShowSeatsEntity seat :showSeatsEntityList){
+        for(ShowSeatsEntity seat :availableSeats){
 
             if(!seat.isBooked()&&seat.getSeatType().equals(bookTicketRequestDto.getSeatType())&&requestSeats.contains(seat.getSeatNumber())){
                 bookedSeats.add(seat);
@@ -91,7 +92,7 @@ public class TicketServiceImplementation implements TicketService {
             throw new Error("All Seats not available");
         }
 
-        //Step 2
+        //Step 2 -> make a ticket for user
 
         TicketEntity ticketEntity = TicketEntity.builder().
                 user(userEntity)
@@ -101,33 +102,34 @@ public class TicketServiceImplementation implements TicketService {
 
 
 
-        //Step 3 :
+        //Step 3 : calculate the amount for ticket
 
         double amount = 0;
 
         for(ShowSeatsEntity showSeatsEntity: bookedSeats){
 
-            showSeatsEntity.setBooked(true);
-            showSeatsEntity.setBookedAt(new Date());
-            showSeatsEntity.setTicket(ticketEntity);
+            showSeatsEntity.setBooked(true); //set booked to true since that seat is booked
+            showSeatsEntity.setBookedAt(new Date()); //update date as system date when ticket is booked
+            showSeatsEntity.setTicket(ticketEntity); //set this showseat is for which ticket
 
             amount = amount + showSeatsEntity.getRate();
         }
 
-        ticketEntity.setBookedAt(new Date());
-        ticketEntity.setAllottedSeats(convertListOfSeatsEntityToString(bookedSeats));
         ticketEntity.setAmount(amount);
 
+        ticketEntity.setBookedAt(new Date());
 
-        //Connect in thw Show and the user
+        ticketEntity.setAllottedSeats(requestSeats.toString()); //set allotedseats
 
+
+        //Connect in the Show and the user
         showEntity.getTickets().add(ticketEntity);
 
 
         //Add the ticket in the tickets list of the user Entity
         userEntity.getTicketEntities().add(ticketEntity);
 
-
+        //save the ticket
         ticketEntity = ticketRepository.save(ticketEntity);
 
         ShowConverter TicketConvertor;
@@ -136,7 +138,7 @@ public class TicketServiceImplementation implements TicketService {
 
     }
 
-    public String convertListOfSeatsEntityToString(List<ShowSeatsEntity> bookedSeats){
+    /*public String convertListOfSeatsEntityToString(List<ShowSeatsEntity> bookedSeats){
 
         String str = "";
         for(ShowSeatsEntity showSeatsEntity : bookedSeats){
@@ -146,5 +148,5 @@ public class TicketServiceImplementation implements TicketService {
 
         return str;
 
-    }
+    }*/
 }
