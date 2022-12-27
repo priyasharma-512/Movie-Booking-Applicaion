@@ -11,6 +11,5 @@ public class TheaterEntryDto {
     String name;
     String address;
     String city;
-    TheaterType theatreType;
 
 }

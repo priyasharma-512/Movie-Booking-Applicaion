@@ -14,12 +14,12 @@ public class TicketDto {
 
     int id;
 
-    Set<String> alloted_seats;
+    String alloted_seats;
 
     double amount;
 
     ShowResponseDto showDto;
 
     @NotNull
-    UserResponseDto userDto; //Mandatory for me to fill this userDto Value
+    UserResponseDto userDto;
 }

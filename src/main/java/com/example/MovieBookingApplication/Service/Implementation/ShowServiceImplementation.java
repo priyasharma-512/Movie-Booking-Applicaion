@@ -35,6 +35,7 @@ public class ShowServiceImplementation implements ShowService {
     @Override
     public ShowResponseDto addShow(ShowEntryDto showEntryDto) {
 
+        //step 1: convert it to entity  need to place in db
         ShowEntity showEntity = ShowConverter.convertDtoToEntity(showEntryDto);
 
         //set MovieEntity -> get movieEntity corresponding to id fetching movie corresponding to id
@@ -53,26 +54,16 @@ public class ShowServiceImplementation implements ShowService {
         showSeatsRepository.saveAll(showSeatsEntityList);
 
         //We need to create Response Show Dto.
-        ShowResponseDto showResponseDto = ShowConverter.convertEntityToDto(showEntity,showEntryDto);
+        ShowResponseDto showResponseDto = ShowConverter.convertEntityToDto(showEntity);
 
         return showResponseDto;
     }
-
-   /* @Override
-    public static ShowResponseDto getShow(int id) {
-        ShowEntity showEntity = ShowRepository.findById(id).get();
-
-        ShowConverter showConverter;
-        ShowResponseDto showResponseDto = ShowConverter.convertEntityToDto(showEntity, ShowEntryDto);
-
-        return showResponseDto;
-    }*/
 
     //creating copy of seats
     public List<ShowSeatsEntity> generateShowEntitySeats(List<TheaterSeatsEntity> theaterSeatsEntityList,ShowEntity showEntity){
 
         List<ShowSeatsEntity> showSeatsEntityList = new ArrayList<>();
-
+        //iterate over the list of theatre seats
         for(TheaterSeatsEntity tse : theaterSeatsEntityList){
 
             ShowSeatsEntity showSeatsEntity = ShowSeatsEntity.builder().seatNumber(tse.getSeatNumber())
@@ -91,6 +82,15 @@ public class ShowServiceImplementation implements ShowService {
         showEntity.setSeats(showSeatsEntityList);
         return showSeatsEntityList;
 
+    }
+
+    @Override
+    public ShowResponseDto getShow(int id) {
+        ShowEntity showEntity = showRepository.findById(id).get();
+
+        ShowResponseDto showResponseDto = ShowConverter.convertEntityToDto(showEntity);
+
+        return showResponseDto;
     }
 
 }

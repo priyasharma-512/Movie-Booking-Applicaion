@@ -3,7 +3,9 @@ package com.example.MovieBookingApplication.Converter;
 import com.example.MovieBookingApplication.Model.ShowEntity;
 import com.example.MovieBookingApplication.Dto.EntryDto.ShowEntryDto;
 import com.example.MovieBookingApplication.Dto.ResponseDto.ShowResponseDto;
+import lombok.experimental.UtilityClass;
 
+@UtilityClass
 public class ShowConverter {
 
 
@@ -13,14 +15,14 @@ public class ShowConverter {
                 .build();
     }
 
-    public static ShowResponseDto convertEntityToDto(ShowEntity showEntity, ShowEntryDto showEntryDto){
+    public static ShowResponseDto convertEntityToDto(ShowEntity showEntity){
 
         return ShowResponseDto.builder()
                 .id(showEntity.getId())
                 .showTime(showEntity.getShowTime())
                 .showDate(showEntity.getShowDate())
-                .movieResponseDto(showEntryDto.getMovieResponseDto())
-                .theaterDto(showEntryDto.getTheaterResponseDto())
+                .movieResponseDto(MovieConverter.convertEntityToDto(showEntity.getMovie()))
+                .theaterDto(TheaterConverter.convertEntityToDto(showEntity.getTheater()))
                 .build();
     }
 }
